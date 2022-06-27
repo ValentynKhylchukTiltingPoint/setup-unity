@@ -45,8 +45,8 @@ async function installUnityHub() {
             await execute(`chmod +x "${unityHubPath}"`);
             await execute(`touch "${process.env.HOME}/.config/Unity Hub/eulaAccepted"`);
             try {
-                await execute('sudo apt-get update');
-                await execute('sudo apt-get install -y libgconf-2-4 libglu1 libasound2 libgtk2.0-0 libgtk-3-0 libnss3 zenity xvfb');
+                await execute('apt-get update');
+                await execute('apt-get install -y libgconf-2-4 libglu1 libasound2 libgtk2.0-0 libgtk-3-0 libnss3 zenity xvfb');
             } catch {
                 // skip 'command not found' error
             }
@@ -57,10 +57,10 @@ async function installUnityHub() {
         unityHubPath = '/Applications/Unity Hub.app/Contents/MacOS/Unity Hub';
         if (!fs.existsSync(unityHubPath)) {
             const installerPath = await tc.downloadTool('https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg');
-            await execute(`sudo hdiutil mount "${installerPath}"`);
+            await execute(`hdiutil mount "${installerPath}"`);
             const hubVolume = (await execute('ls /Volumes')).match(/Unity Hub.*/)[0];
             await execute(`ditto "/Volumes/${hubVolume}/Unity Hub.app" "/Applications/Unity Hub.app"`);
-            await execute(`sudo hdiutil detach "/Volumes/${hubVolume}"`);
+            await execute(`hdiutil detach "/Volumes/${hubVolume}"`);
             await execute(`rm "${installerPath}"`);
         }
 
