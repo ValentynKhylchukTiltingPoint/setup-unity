@@ -83,8 +83,8 @@ async function installUnityEditor(unityHubPath, installPath, unityVersion, unity
     if (!unityPath) {
         if (installPath) {
             if (process.platform === 'linux' || process.platform === 'darwin') {
-                await execute(`sudo mkdir -p "${installPath}"`);
-                await execute(`sudo chmod -R o+rwx "${installPath}"`);
+                await execute(`mkdir -p "${installPath}"`);
+                await execute(`chmod -R o+rwx "${installPath}"`);
             }
             await executeHub(unityHubPath, `install-path --set "${installPath}"`);
         }
@@ -108,8 +108,8 @@ async function installUnityModules(unityHubPath, unityVersion, unityModules, uni
 
 async function postInstall() {
     if (process.platform === 'darwin') {
-        await execute('sudo mkdir -p "/Library/Application Support/Unity"');
-        await execute(`sudo chown -R ${process.env.USER} "/Library/Application Support/Unity"`);
+        await execute('mkdir -p "/Library/Application Support/Unity"');
+        await execute(`chown -R ${process.env.USER} "/Library/Application Support/Unity"`);
     }
 }
 
